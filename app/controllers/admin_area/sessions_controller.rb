@@ -1,25 +1,25 @@
 module AdminArea
   class SessionsController < ApplicationController
     def new
-      # This action renders the login form view
+      # Renders the login form view
     end
 
     def create
-      # Change 'username' to 'email' if that's the input you're using in your form
-      admin = Admin.find_by(email: params[:username]) # Use the correct parameter name
+      # Corrected: Change to `email` to match the form input
+      admin = Admin.find_by(email: params[:email])
 
-      if admin&.authenticate(params[:password]) # Ensure this matches the password field in your form
+      if admin&.authenticate(params[:password])
         session[:admin_id] = admin.id
-        redirect_to admin_area_dashboard_path # Redirect to the dashboard after successful login
+        redirect_to admin_area_dashboard_path
       else
-        flash.now[:alert] = "Invalid email or password" # Alert message for invalid login
-        render :new # Re-render the login form with an error message
+        flash.now[:alert] = "Invalid email or password"
+        render :new
       end
     end
 
     def destroy
-      session.delete(:admin_id) # Clear the session for the admin
-      redirect_to admin_login_path # Redirect to the login page after logout
+      session.delete(:admin_id)
+      redirect_to admin_login_path
     end
   end
 end

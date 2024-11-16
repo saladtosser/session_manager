@@ -1,83 +1,123 @@
-<div class="container my-5">
-  <h2 class="mb-4">Admin Dashboard</h2>
+<div class="container-fluid p-4">
+  <!-- Header with Logo and Logout -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="logo">
+      <%= image_tag "logo.png", alt: "Logo", style: "width: 120px; height: auto;" %> <!-- Custom Logo -->
+    </div>
+    <h1>Admin Dashboard</h1>
+    <%= link_to "Logout", admin_area_logout_path, method: :delete, class: "btn btn-outline-danger" %>
+  </div>
 
-  <!-- Summary Metrics -->
+  <!-- Button to Create New Session -->
+  <div class="my-3">
+    <%= link_to "Create New Session", new_admin_area_event_session_path, class: "btn btn-primary" %>
+  </div>
+
+  <!-- Summary Cards Row with Icons -->
   <div class="row mb-4">
-    <div class="col-lg-3 col-sm-6 mb-4">
-      <div class="card text-white bg-primary">
-        <div class="card-body">
-          <h5 class="card-title">Total Registrations</h5>
-          <p class="card-text"><%= @total_registrations %></p>
-        </div>
+    <div class="col-md-3">
+      <div class="card text-center shadow-sm p-3 mb-4 bg-primary text-white">
+        <i class="fas fa-user-check fa-3x mb-2"></i>
+        <h4>Total Registrations</h4>
+        <p class="display-4"><%= @total_registrations %></p>
       </div>
     </div>
-
-    <div class="col-lg-3 col-sm-6 mb-4">
-      <div class="card text-white bg-info">
-        <div class="card-body">
-          <h5 class="card-title">Registrations by College</h5>
-          <ul>
-            <% @registrations_by_college.each do |college, count| %>
-              <li><%= college %>: <%= count %></li>
-            <% end %>
-          </ul>
-        </div>
+    <div class="col-md-3">
+      <div class="card text-center shadow-sm p-3 mb-4 bg-success text-white">
+        <i class="fas fa-university fa-3x mb-2"></i>
+        <h4>Colleges Represented</h4>
+        <p class="display-4"><%= @registrations_by_college.keys.size %></p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center shadow-sm p-3 mb-4 bg-warning text-dark">
+        <i class="fas fa-clock fa-3x mb-2"></i>
+        <h4>Recent Registrations</h4>
+        <p class="display-4"><%= @recent_registrations.count %></p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center shadow-sm p-3 mb-4 bg-danger text-white">
+        <i class="fas fa-chart-line fa-3x mb-2"></i>
+        <h4>Daily Registrations</h4>
+        <p class="display-4"><%= @daily_registrations.values.sum %></p>
       </div>
     </div>
   </div>
 
-<h4 class="mt-5">Daily Registration Trends</h4>
-<canvas id="registrationsChart" width="400" height="150"></canvas>
+  <!-- Recent Registrations Table -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header">
+      <h3>Recent Registrations</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>College</th>
+            <th>Event Session</th> <!-- New Column for Event Session -->
+            <th>Registered At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @recent_registrations.each do |registration| %>
+            <tr>
+              <td><%= registration.full_name %></td>
+              <td><%= registration.email %></td>
+              <td><%= registration.phone_number %></td>
+              <td><%= registration.college %></td>
+              <td><%= registration.event_session&.name || "No Session Assigned" %></td> <!-- Safe Navigation -->
+              <td><%= registration.created_at.strftime("%d %b %Y, %H:%M") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
+  <!-- Registrations Over Time Chart -->
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h3>Registrations Over Time</h3>
+    </div>
+    <div class="card-body">
+      <canvas id="registrationsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  // Chart Data - Fetch registration counts dynamically
+  document.addEventListener("DOMContentLoaded", function() {
     const ctx = document.getElementById("registrationsChart").getContext("2d");
-    const registrationsChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: <%= @daily_registrations.keys.to_json.html_safe %>,
-        datasets: [{
-          label: "Registrations",
-          data: <%= @daily_registrations.values.to_json.html_safe %>,
-          borderColor: "rgba(75, 192, 192, 1)",
-          fill: false,
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+    const registrationsData = {
+      labels: <%= @daily_registration_dates.to_json.html_safe %>, // Replace with an array of date labels
+      datasets: [{
+        label: "Registrations",
+        data: <%= @daily_registration_counts.to_json.html_safe %>, // Replace with array of counts per date
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1
+      }]
+    };
+
+    const chartOptions = {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
         }
       }
+    };
+
+    new Chart(ctx, {
+      type: "line",
+      data: registrationsData,
+      options: chartOptions
     });
   });
 </script>
-
-
-  <!-- Recent Registrations Table -->
-  <h4 class="my-4">Recent Registrations</h4>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th>College</th>
-        <th>Registration Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @recent_registrations.each do |registration| %>
-        <tr>
-          <td><%= registration.full_name %></td>
-          <td><%= registration.email %></td>
-          <td><%= registration.phone_number %></td>
-          <td><%= registration.college %></td>
-          <td><%= registration.created_at.strftime("%d %b %Y") %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
