@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+ruby '3.2.3' # or any higher version you prefer
 
 # Core Gems
 gem "rails", "~> 7.2.1", ">= 7.2.1.1"
@@ -11,13 +11,11 @@ gem "bcrypt", "~> 3.1.7" # For secure encryption and logins
 gem "bootsnap", require: false
 
 # Database Gems
-group :development, :test do
-  gem "sqlite3", ">= 1.4" # Use SQLite in development and test environments
-end
+# SQLite for development and test
+gem "sqlite3", "~> 1.4", group: [:development, :test]
 
-group :production do
-  gem "pg" # PostgreSQL for production
-end
+# PostgreSQL for production
+gem "pg", group: :production
 
 # Frontend and Assets
 gem "bootstrap", "~> 5.1.3"
@@ -45,3 +43,4 @@ group :development, :test do
   gem "brakeman", require: false # Security vulnerability analysis
   gem "rubocop-rails-omakase", require: false # Ruby code styling
 end
+
