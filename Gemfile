@@ -19,7 +19,7 @@ gem "sqlite3", "~> 2.0", group: [:development, :test] # Adjusted for compatibili
 gem "pg", group: :production
 
 # Frontend and Assets
-gem "bootstrap", "~> 5.1.3"
+gem "bootstrap", "~> 5.3.3"
 gem 'dotenv-rails', groups: [:development, :test]
 
 
