@@ -6,8 +6,10 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-
-Dotenv::Railtie.load
+# Load Dotenv only if it's not in production (or you can change to include production if needed)
+if Rails.env.development? || Rails.env.test?
+  Dotenv::Railtie.load
+end
 
 module SessionManager
   class Application < Rails::Application
