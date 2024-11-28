@@ -20,7 +20,8 @@ gem "pg", group: :production
 
 # Frontend and Assets
 gem "bootstrap", "~> 5.1.3"
-gem "dotenv-rails"
+gem 'dotenv-rails', groups: [:development, :test]
+
 
 # Communication and APIs
 gem "twilio-ruby"
