@@ -7,7 +7,8 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 
-Dotenv::Railtie.load
+Dotenv::Rails.load
+
 
 module SessionManager
   class Application < Rails::Application
