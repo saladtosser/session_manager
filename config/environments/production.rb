@@ -78,9 +78,20 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  # Set up email delivery method using Namecheap Starter Email
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "mail.iraqitechclub.com", # Namecheap SMTP server
+    port: 587,                         # Port for TLS
+    authentication: "plain",           # Authentication type
+    enable_starttls_auto: true,        # Enable TLS encryption
+    user_name: ENV.fetch("SMTP_USERNAME", "mail@iraqitechclub.com"), # Your email username
+    password: ENV.fetch("SMTP_PASSWORD", "huR!Z9FhRe~cu@"),         # Your email password
+    domain: "iraqitechclub.com"        # Your domain
+  }
+
+  # Specify the default host for URLs in emails
+  config.action_mailer.default_url_options = { host: "iraqitechclub.com", protocol: "https" }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
