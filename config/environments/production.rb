@@ -81,14 +81,15 @@ Rails.application.configure do
   # Set up email delivery method using Namecheap Starter Email
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "mail.iraqitechclub.com", # Namecheap SMTP server
-    port: 587,                         # Port for TLS
-    authentication: "plain",           # Authentication type
-    enable_starttls_auto: true,        # Enable TLS encryption
-    user_name: ENV.fetch("SMTP_USERNAME", "mail@iraqitechclub.com"), # Your email username
-    password: ENV.fetch("SMTP_PASSWORD", "huR!Z9FhRe~cu@"),         # Your email password
-    domain: "iraqitechclub.com"        # Your domain
-  }
+  address: "mail.iraqitechclub.com",  # Namecheap SMTP server
+  port: 465,                          # Use port 465 for SSL
+  authentication: "plain",            # Authentication type
+  ssl: true,                           # Enable SSL
+  user_name: ENV.fetch("SMTP_USERNAME", "mail@iraqitechclub.com"),  # Your email username
+  password: ENV.fetch("SMTP_PASSWORD", "huR!Z9FhRe~cu@"),           # Your email password
+  domain: "iraqitechclub.com"         # Your domain
+}
+
 
   # Specify the default host for URLs in emails
   config.action_mailer.default_url_options = { host: "iraqitechclub.com", protocol: "https" }
