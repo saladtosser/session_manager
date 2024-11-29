@@ -1,5 +1,3 @@
-require "active_support/core_ext/integer/time"
-
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -7,18 +5,14 @@ Rails.application.configure do
   config.enable_reloading = false
 
   # Eager load code on boot. This eager loads most of Rails and
-  # your application in memory, allowing both threaded web servers
-  # and those relying on copy on write to perform better.
+  # your application in memory, allowing both threaded web servers and
+  # those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-
-  # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"], config/master.key, or an environment
-  # key such as config/credentials/production.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
 
   # Disable serving static files from `public/`, relying on NGINX/Apache to do so instead.
   # config.public_file_server.enabled = false
@@ -39,20 +33,12 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Mount Action Cable outside main process or domain.
-  # config.action_cable.mount_path = nil
-  # config.action_cable.url = "wss://example.com/cable"
-  # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
-
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
   # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
-
-  # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
@@ -65,7 +51,7 @@ Rails.application.configure do
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = :debug
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -81,15 +67,14 @@ Rails.application.configure do
   # Set up email delivery method using Namecheap Starter Email
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  address: "mail.iraqitechclub.com",  # Namecheap SMTP server
-  port: 465,                          # Use port 465 for SSL
-  authentication: "plain",            # Authentication type
-  ssl: true,                           # Enable SSL
-  user_name: ENV.fetch("SMTP_USERNAME", "mail@iraqitechclub.com"),  # Your email username
-  password: ENV.fetch("SMTP_PASSWORD", "huR!Z9FhRe~cu@"),           # Your email password
-  domain: "iraqitechclub.com"         # Your domain
-}
-
+    address: "mail.iraqitechclub.com",  # Namecheap SMTP server
+    port: 587,                         # Use port 587 for TLS
+    authentication: "plain",           # Authentication type
+    enable_starttls_auto: true,        # Enable TLS encryption
+    user_name: "mail@iraqitechclub.com",  # Your email username (hardcoded)
+    password: "huR!Z9FhRe~cu@",        # Your email password (hardcoded)
+    domain: "iraqitechclub.com"        # Your domain
+  }
 
   # Specify the default host for URLs in emails
   config.action_mailer.default_url_options = { host: "iraqitechclub.com", protocol: "https" }
