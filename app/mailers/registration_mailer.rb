@@ -1,5 +1,5 @@
 class RegistrationMailer < ApplicationMailer
-  default from: 'mail@iraqitechclub.com'  # Default sender email
+  default from: 'mail@iraqitechclub.com'
 
   def invite_email(registration)
     @registration = registration
@@ -11,9 +11,9 @@ class RegistrationMailer < ApplicationMailer
     mail(
       to: @registration.email,
       subject: 'Session Invitation'
-    ) do |format|
-      format.html { render 'registration_mailer/invite_email' }  # Use the correct view path
-      format.text { render 'registration_mailer/invite_email' }   # You can also include a text version if needed
+    ) do
+      # This will use the default HTML template automatically
+      render 'registration_mailer/invite_email'
     end
 
     # Log after the email has been sent
