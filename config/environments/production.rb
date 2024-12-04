@@ -4,10 +4,7 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
-  # Eager load code on boot. This eager loads most of Rails and
-  # your application in memory, allowing both threaded web servers and
-  # those relying on copy on write to perform better.
-  # Rake tasks automatically ignore this option for performance.
+  # Eager load code on boot.
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
@@ -15,7 +12,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   # Disable serving static files from `public/`, relying on NGINX/Apache to do so instead.
-  # config.public_file_server.enabled = false
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
@@ -33,54 +30,46 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
-  # config.assume_ssl = true
-
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # Force all access to the app over SSL, use Strict-Transport-Security, and secure cookies.
   config.force_ssl = true
 
-  # Log to STDOUT by default
+  # Log to STDOUT by default.
   config.logger = ActiveSupport::Logger.new(STDOUT)
-    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+    .tap { |logger| logger.formatter = ::Logger::Formatter.new }
     .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
-  # "info" includes generic and useful information about system operation, but avoids logging too much
-  # information to avoid inadvertent exposure of personally identifiable information (PII). If you
-  # want to log everything, set the level to "debug".
+  # Use the lowest log level to ensure availability of diagnostic information when problems arise.
   config.log_level = :debug
-
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "session_manager_production"
 
-  # Disable caching for Action Mailer templates even if Action Controller
-  # caching is enabled.
+  # Disable caching for Action Mailer templates.
   config.action_mailer.perform_caching = false
 
-  # Set up email delivery method using Namecheap Starter Email
+  # Set up email delivery method using CloudMailin SMTP
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "mail.iraqitechclub.com",  # Namecheap SMTP server
-    port: 587,                         # Use port 587 for TLS
-    authentication: "plain",           # Authentication type
-    enable_starttls_auto: true,        # Enable TLS encryption
-    user_name: "mail@iraqitechclub.com",  # Your email username (hardcoded)
-    password: "huR!Z9FhRe~cu@",        # Your email password (hardcoded)
-    domain: "iraqitechclub.com"        # Your domain
+    address: "smtp.cloudmta.net",         # CloudMailin SMTP server
+    port: 587,                            # Port for TLS
+    authentication: :plain,               # Authentication type
+    enable_starttls_auto: true,           # Enable TLS encryption
+    user_name: "7a86dea731b2f948",        # Username from CloudMailin
+    password: "2VxL5ZdzRAMfMsY4zKyGsNoe", # Password from CloudMailin
+    domain: "iraqitechclub.com"           # Your domain
   }
 
   # Specify the default host for URLs in emails
   config.action_mailer.default_url_options = { host: "iraqitechclub.com", protocol: "https" }
 
-  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation cannot be found).
+  # Optional: Default "from" address for outgoing emails
+  config.action_mailer.default_options = { from: "no-reply@iraqitechclub.com" }
+
+  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
   # Don't log any deprecations.
@@ -94,6 +83,4 @@ Rails.application.configure do
   #   "example.com",     # Allow requests from example.com
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   # ]
-  # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
