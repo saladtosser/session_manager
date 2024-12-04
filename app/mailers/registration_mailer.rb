@@ -4,19 +4,21 @@ class RegistrationMailer < ApplicationMailer
   def invite_email(registration)
     @registration = registration
 
-    # Log to check if the email method is being called
-    Rails.logger.info "Sending session invitation email to #{@registration.email}"
+    # Log for debugging
+    Rails.logger.info "Preparing to send session invitation email to #{@registration.email}"
 
-    # Sending the email and rendering the view
+    # Construct and send the email
     mail(
       to: @registration.email,
-      subject: 'Session Invitation'
-    ) do
-      # This will use the default HTML template automatically
-      render 'registration_mailer/invite_email'
+      subject: 'ITC Session Invitation'
+    ) do |format|
+      format.html { render 'registration_mailer/invite_email' }
     end
 
-    # Log after the email has been sent
-    Rails.logger.info "Email successfully sent to #{@registration.email}"
+    # Log success
+    Rails.logger.info "Invitation email sent successfully to #{@registration.email}"
+  rescue StandardError => e
+    Rails.logger.error "Error sending email to #{@registration.email}: #{e.message}"
   end
 end
+
