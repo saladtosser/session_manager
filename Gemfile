@@ -5,7 +5,7 @@ source "https://rubygems.org"
 ruby '3.2.3'
 
 # Core Gems
-gem "rails", "~> 7.2.1", ">= 7.2.1.1"
+gem "rails", "~> 8.0.0"
 gem "puma", ">= 5.0"
 gem "importmap-rails"
 gem "turbo-rails"
