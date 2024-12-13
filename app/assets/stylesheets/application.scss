@@ -107,3 +107,32 @@ footer {
   margin-top: 5rem !important;
 }
 
+// Registration Page-Specific Styles
+.registration-page {
+  .custom-dropdown {
+    position: relative;
+
+    .custom-select {
+      appearance: none;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      background-image: linear-gradient(45deg, transparent 50%, #002855 50%), linear-gradient(135deg, #002855 50%, transparent 50%);
+      background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+
+      &:focus {
+        outline: none;
+        border-color: #002855;
+        box-shadow: 0 0 8px rgba(0, 40, 85, 0.2);
+      }
+
+      &:hover {
+        background-color: #e8f5ff;
+      }
+    }
+  }
+}

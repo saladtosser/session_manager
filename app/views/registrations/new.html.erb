@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5 registration-page">
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">
       <!-- Logo Section -->
@@ -54,7 +54,9 @@
             <div class="form-group mb-3 row">
               <div class="col-12">
                 <%= f.label :event_session_id, "Select a Session", class: "form-label" %>
-                <%= f.collection_select :event_session_id, @event_sessions, :id, :name, prompt: "Choose a session", class: "form-control", required: true %>
+                <div class="custom-dropdown">
+                  <%= f.collection_select :event_session_id, @event_sessions, :id, :name, { prompt: "Choose a session" }, { class: "form-control custom-select animated-dropdown", required: true } %>
+                </div>
                 <div class="text-danger"><%= @registration.errors[:event_session_id].first if @registration.errors[:event_session_id].any? %></div>
               </div>
             </div>
@@ -69,4 +71,3 @@
     </div>
   </div>
 </div>
-
