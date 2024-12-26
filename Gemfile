@@ -15,7 +15,7 @@ gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 
 # Database Gems
-gem "sqlite3", "~> 2.0", group: [:development, :test] # Adjusted for compatibility with your system
+gem "sqlite3", "~> 2.5", group: [:development, :test] # Adjusted for compatibility with your system
 gem "pg", group: :production
 
 # Frontend and Assets
