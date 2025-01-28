@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session Invite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
@@ -20,10 +21,14 @@
             overflow: hidden;
         }
         .header {
-            background-color: #007bff;
+            background: linear-gradient(90deg, #007bff, #00c6ff);
             color: #fff;
             padding: 20px;
             text-align: center;
+        }
+        .header img {
+            width: 100px;
+            margin-bottom: 10px;
         }
         .content {
             padding: 20px;
@@ -37,6 +42,22 @@
             color: #555;
             line-height: 1.5;
         }
+        .details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
         .footer {
             background-color: #f4f4f4;
             text-align: center;
@@ -44,12 +65,31 @@
             font-size: 12px;
             color: #999;
         }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        @media only screen and (max-width: 600px) {
+            table {
+                width: 100%;
+            }
+            .content {
+                padding: 10px;
+            }
+            .header {
+                font-size: 18px;
+            }
+            .footer {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
     <table>
         <tr>
             <td class="header">
+                <img src="your-logo-url-here" alt="Logo">
                 <h1>You're Invited!</h1>
             </td>
         </tr>
@@ -57,14 +97,23 @@
             <td class="content">
                 <h2>Hello,</h2>
                 <p>We are excited to invite you to the session titled <strong>Welcome to Your Computer Journey UOB</strong>.</p>
-                <p>The session will be held at <strong>University of Babylon</strong> on <strong>Tuesday, December 17th, 2024, at 11:00 AM</strong>.</p>
+                <div class="details">
+                    <p><strong>Location:</strong> University of Al-mustaqbal</p>
+                    <p><strong>Date:</strong> Tuesday, February 4th, 2025</p>
+                    <p><strong>Time:</strong> 11:00 AM</p>
+                </div>
                 <p>This is a fantastic opportunity to learn, grow, and connect with others in the field of technology.</p>
+                <p><a href="your-link-here" class="cta-button">RSVP Now</a></p>
                 <p>We hope to see you there!</p>
             </td>
         </tr>
         <tr>
             <td class="footer">
-                <p>&copy; 2024 ITC Devs. All rights reserved.</p>
+                <p>&copy; 2024 Byterun. All rights reserved.</p>
+                <p>
+                    <a href="https://facebook.com">Facebook</a> | 
+                    <a href="https://twitter.com">Twitter</a>
+                </p>
             </td>
         </tr>
     </table>
